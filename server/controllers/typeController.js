@@ -5,10 +5,14 @@ class TypeController {
     const types = await Type.findAll();
     return await res.json(types);
   }
-  async create(req, res) {
-    const { name } = req.body;
-    const type = await Type.create({ name });
-    return res.json(type);
+  async create(req, res, next) {
+    try {
+      const { name } = req.body;
+      const type = await Type.create({ name });
+      return res.json(type);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
   }
   //   async delete(req, res) {
   //     const { name } = req.body;
