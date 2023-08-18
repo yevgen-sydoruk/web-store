@@ -14,10 +14,5 @@ class TypeController {
       next(ApiError.badRequest(e.message));
     }
   }
-  //   async delete(req, res) {
-  //     const { name } = req.body;
-  //     const type = await Type.delete({ name });
-  //     return res.json(type);
-  //   }
 }
 module.exports = new TypeController();
