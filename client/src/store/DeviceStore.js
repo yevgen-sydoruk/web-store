@@ -4,7 +4,9 @@ export default class DeviceStore {
   constructor() {
     this._types = [
       { id: 1, name: "smarthphones" },
-      { id: 2, name: "laptops" },
+      { id: 2, name: "Laptops" },
+      { id: 3, name: "Keyboards" },
+      { id: 4, name: "Monitors" },
     ];
     this._brands = [
       { id: 1, name: "Apple" },
@@ -39,7 +41,30 @@ export default class DeviceStore {
         rating: 5,
         img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/refurb-iphone-12-pro-gold-2020?wid=2000&hei=1897&fmt=jpeg&qlt=95&.v=1635202844000",
       },
+      {
+        id: 5,
+        name: "Iphone 12 pro",
+        price: 1000,
+        rating: 5,
+        img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/refurb-iphone-12-pro-gold-2020?wid=2000&hei=1897&fmt=jpeg&qlt=95&.v=1635202844000",
+      },
+      {
+        id: 6,
+        name: "Iphone 12 pro",
+        price: 1000,
+        rating: 5,
+        img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/refurb-iphone-12-pro-gold-2020?wid=2000&hei=1897&fmt=jpeg&qlt=95&.v=1635202844000",
+      },
+      {
+        id: 7,
+        name: "Iphone 12 pro",
+        price: 1000,
+        rating: 5,
+        img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/refurb-iphone-12-pro-gold-2020?wid=2000&hei=1897&fmt=jpeg&qlt=95&.v=1635202844000",
+      },
     ];
+    this._selectedType = {};
+    this._selectedBrand = {};
     makeAutoObservable(this);
   }
   setDevice(devices) {
@@ -51,6 +76,12 @@ export default class DeviceStore {
   setBrands(brands) {
     this._brands = brands;
   }
+  setSelectedType(type) {
+    this._selectedType = type;
+  }
+  setSelectedBrand(brand) {
+    this._selectedBrand = brand;
+  }
 
   get devices() {
     return this._devices;
@@ -60,5 +91,11 @@ export default class DeviceStore {
   }
   get brands() {
     return this._brands;
+  }
+  get selectedType() {
+    return this._selectedType;
+  }
+  get selectedBrand() {
+    return this._selectedBrand;
   }
 }
