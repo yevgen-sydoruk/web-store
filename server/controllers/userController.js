@@ -40,8 +40,13 @@ class UserController {
     return res.json({ token });
   }
   async check(req, res, next) {
-    const token = generateJWT(req.user.id, req.user.email, req.user.role);
-    return res.json({ token });
+    try {
+      console.log(req.user);
+      const token = generateJWT(req.user.id, req.user.email, req.user.role);
+      return res.json({ token });
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
   }
 }
 module.exports = new UserController();
