@@ -10,13 +10,13 @@ const Admin = () => {
   const [deviceVisible, setDeviceVisible] = useState(false);
   return (
     <Container className="d-flex flex-column">
-      <Button variont={"outline-dark"} className="mt-4 p-2" onClick={() => setTypeVisible(true)}>
+      <Button variant={"outline-dark"} className="mt-4 p-2" onClick={() => setTypeVisible(true)}>
         Add Type
       </Button>
-      <Button variont={"outline-dark"} className="mt-4 p-2" onClick={() => setBrandVisible(true)}>
+      <Button variant={"outline-dark"} className="mt-4 p-2" onClick={() => setBrandVisible(true)}>
         Add Brand
       </Button>
-      <Button variont={"outline-dark"} className="mt-4 p-2" onClick={() => setDeviceVisible(true)}>
+      <Button variant={"outline-dark"} className="mt-4 p-2" onClick={() => setDeviceVisible(true)}>
         Add Device
       </Button>
       <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)} />
