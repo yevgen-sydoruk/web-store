@@ -13,6 +13,12 @@ const NavBar = observer((props) => {
   const navigate = useNavigate();
   const { user } = useContext(Context);
 
+  function clickHandler() {
+    console.log(user.isAuth);
+    user.setIsAuth(true);
+    console.log(user.isAuth);
+  }
+
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
@@ -34,7 +40,7 @@ const NavBar = observer((props) => {
           </Nav>
         ) : (
           <Nav className="ml-auto">
-            <Button variant={"outline-light"} onClick={() => user.setIsAuth(true)}>
+            <Button variant={"outline-light"} onClick={clickHandler}>
               Authorization
             </Button>
           </Nav>
