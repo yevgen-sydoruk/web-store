@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { DEVICE_ROUTE } from "../utils/consts";
 
 const DeviceItem = ({ device }) => {
-  console.log(device);
   const navigate = useNavigate();
   return (
     <Col md={3} className="mb-3 d-flex justify-content-center  ">
