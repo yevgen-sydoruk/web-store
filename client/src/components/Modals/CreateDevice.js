@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Modal, Button, Form, Dropdown, Row, Col } from "react-bootstrap";
 import { Context } from "../../index";
+import { observer } from "mobx-react-lite";
 
-const CreateDevice = ({ show, onHide }) => {
+const CreateDevice = observer(({ show, onHide }) => {
   const { device } = useContext(Context);
   const [info, setInfo] = useState([]);
 
@@ -68,6 +69,6 @@ const CreateDevice = ({ show, onHide }) => {
       </Modal.Footer>
     </Modal>
   );
-};
+});
 
 export default CreateDevice;
