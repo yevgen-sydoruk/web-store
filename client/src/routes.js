@@ -1,8 +1,4 @@
 import Admin from "./pages/Admin";
-import Auth from "./pages/Auth";
-import Basket from "./pages/Basket";
-import DevicePage from "./pages/DevicePage";
-import Shop from "./pages/Shop";
 import {
   ADMIN_ROUTE,
   BASKET_ROUTE,
@@ -11,6 +7,10 @@ import {
   REGISTRATION_ROUTE,
   SHOP_ROUTE,
 } from "./utils/consts";
+import Basket from "./pages/Basket";
+import Shop from "./pages/Shop";
+import Auth from "./pages/Auth";
+import DevicePage from "./pages/DevicePage";
 
 export const authRoutes = [
   {

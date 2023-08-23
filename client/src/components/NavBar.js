@@ -9,15 +9,14 @@ import { observer } from "mobx-react-lite";
 import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = observer((props) => {
-  const navigate = useNavigate();
+const NavBar = observer(() => {
   const { user } = useContext(Context);
+  const navigate = useNavigate();
 
-  function clickHandler() {
-    console.log(user.isAuth);
-    user.setIsAuth(true);
-    console.log(user.isAuth);
-  }
+  const logOut = () => {
+    user.setUser({});
+    user.setIsAuth(false);
+  };
 
   return (
     <Navbar bg="dark" data-bs-theme="dark">
@@ -26,21 +25,22 @@ const NavBar = observer((props) => {
           BestPurchase
         </NavLink>
         {user.isAuth ? (
-          <Nav className="ml-auto">
-            <Button variant={"outline-light"} onClick={() => navigate(ADMIN_ROUTE)}>
-              Admin
-            </Button>
+          <Nav className="ml-auto ">
             <Button
               variant={"outline-light"}
-              className="ml-4"
-              onClick={() => navigate(LOGIN_ROUTE)}
+              className="mr-4"
+              style={{ marginRight: "5px" }}
+              onClick={() => navigate(ADMIN_ROUTE)}
             >
+              Admin
+            </Button>
+            <Button variant={"outline-light"} className="ml-2" onClick={() => logOut()}>
               Leave
             </Button>
           </Nav>
         ) : (
           <Nav className="ml-auto">
-            <Button variant={"outline-light"} onClick={clickHandler}>
+            <Button variant={"outline-light"} onClick={() => navigate(LOGIN_ROUTE)}>
               Authorization
             </Button>
           </Nav>
