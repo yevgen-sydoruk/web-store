@@ -1,0 +1,6 @@
+1. Fix devices list when item does not appear with selected device
+2. Login/auth/registration need some feedback
+3. Finish basket
+4. Finish rating
+5. token refresh after leaving the page
+6. Greet the name of the admin near admin buttons
