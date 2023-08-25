@@ -30,6 +30,8 @@ export default class DeviceStore {
   setSelectedBrand(brand) {
     this.setPage(1);
     this._selectedBrand = brand;
+    console.log(this._selectedBrand);
+    console.log(brand);
   }
   setPage(page) {
     this._page = page;

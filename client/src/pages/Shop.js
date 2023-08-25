@@ -6,6 +6,7 @@ import DeviceList from "../components/DeviceList";
 import { observer } from "mobx-react-lite";
 import { Context } from "../index";
 import { fetchBrands, fetchDevices, fetchTypes } from "../http/deviceAPI";
+import Pages from "../components/Pages";
 
 const Shop = observer(() => {
   const { device } = useContext(Context);
@@ -13,13 +14,20 @@ const Shop = observer(() => {
   useEffect(() => {
     fetchTypes().then((data) => device.setTypes(data));
     fetchBrands().then((data) => device.setBrands(data));
-    fetchDevices(null, null, 1, 2).then((data) => {
-      console.log(data);
+    fetchDevices(null, null, 1, 3).then((data) => {
+      // console.log(data);
       device.setDevices(data.rows);
       device.setTotalCount(data.count);
     });
-    // fetchOneDevice(device.id).then((data) => device.setDevice(data.rows));
-  }, []);
+  }, [device]);
+
+  useEffect(() => {
+    fetchDevices(device.selectedType.id, device.selectedBrand.id, device.page, 1).then((data) => {
+      // console.log(data);
+      device.setDevices(data.rows);
+      device.setTotalCount(data.count);
+    });
+  }, [device.page]);
 
   return (
     <Container className="">
@@ -30,6 +38,7 @@ const Shop = observer(() => {
         <Col md={9}>
           <BrandBar />
           {!device.devices ? "No results" : <DeviceList />}
+          <Pages />
         </Col>
       </Row>
     </Container>

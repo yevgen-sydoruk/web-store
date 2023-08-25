@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 
 const DeviceList = observer(() => {
   const { device } = useContext(Context);
-  console.log(device);
+
   return (
     <Row className="d-flex">
       {device.devices.map((device) => (
