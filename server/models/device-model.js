@@ -5,6 +5,8 @@ const DeviceSchema = new Schema({
   name: { type: String, unique: true, required: true },
   price: { type: String, required: true },
   rating: { type: String, default: 0 },
+  brandId: { type: Schema.Types.ObjectId, ref: "Brand" },
+  typeId: { type: Schema.Types.ObjectId, ref: "Type" },
   img: { type: String, required: true },
 });
 
