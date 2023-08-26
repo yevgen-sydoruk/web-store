@@ -1,44 +1,120 @@
 const ApiError = require("../error/apiError");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User, Basket } = require("../models/models");
+const tokenModel = require("../models/token-model");
+// const { User, Basket } = require("../models/models"); //postgres
+
+const UserModel = require("../models/user-model");
+const UserDto = require("../dto/user-dto");
+
+const { validationResult } = require("express-validator");
 
 const generateJWT = (id, email, role) => {
-  return jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
-    expiresIn: "12h",
+  const accessToken = jwt.sign({ id, email, role }, process.env.SECRET_ACCESS_KEY, {
+    expiresIn: "2h",
   });
+  const refreshToken = jwt.sign({ id, email, role }, process.env.SECRET_REFRESH_KEY, {
+    expiresIn: "30d",
+  });
+
+  return { accessToken, refreshToken };
+};
+
+const saveToken = async (id, refreshToken) => {
+  const tokenData = await tokenModel.findOne({ user: id });
+  if (tokenData) {
+    tokenData.refreshToken = refreshToken;
+    return tokenData.save();
+  }
+  const token = await tokenModel.create({ user: id, refreshToken });
+  return token;
+};
+
+const removeToken = async (refreshToken) => {
+  const tokenData = await tokenModel.deleteOne({ refreshToken });
+  return tokenData;
 };
 
 class UserController {
   async registration(req, res, next) {
-    const { email, password, role } = req.body;
-    // console.log(req.body);
-    if (!email || !password) {
-      return next(ApiError.badRequest("Incorrect email or password"));
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return next(ApiError.badRequest("Validation error", errors.array()));
+      }
+      const { email, password, role } = req.body;
+
+      if (!email || !password) {
+        return next(ApiError.badRequest("Incorrect email or password"));
+      }
+      const candidate = await UserModel.findOne({ email });
+      if (candidate) {
+        return next(ApiError.badRequest("This email is already registered"));
+      }
+      const hashPassword = await bcrypt.hash(password, 5);
+      const user = await UserModel.create({ email, role, password: hashPassword });
+      // const basket = await Basket.create({ userId: user.id });
+      const userDto = new UserDto(user); //id, email, role
+
+      const tokens = generateJWT({ ...userDto });
+
+      await saveToken(userDto.id, tokens.refreshToken);
+      res.cookie("refreshToken", tokens.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+      return res.json({ ...tokens, user: userDto });
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
     }
-    const candidate = await User.findOne({ where: { email } });
-    if (candidate) {
-      return next(ApiError.badRequest("This email is already registered"));
-    }
-    const hashPassword = await bcrypt.hash(password, 5);
-    const user = await User.create({ email, role, password: hashPassword });
-    const basket = await Basket.create({ userId: user.id });
-    const token = generateJWT(user.id, user.email, user.role);
-    return res.json({ token });
   }
+
   async login(req, res, next) {
-    const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return next(ApiError.internal("User with such name does not exist"));
+    try {
+      const { email, password } = req.body;
+
+      const user = await UserModel.findOne({ email });
+      if (!user) {
+        return next(ApiError.internal("User with such name does not exist"));
+      }
+      let comparePassword = await bcrypt.compareSync(password, user.password);
+      if (!comparePassword) {
+        return next(ApiError.internal("Password is incorrect"));
+      }
+      const userDto = new UserDto(user); //id, email, role
+      const tokens = generateJWT({ ...userDto });
+      await saveToken(userDto.id, tokens.refreshToken);
+      // const token = generateJWT(user.id, user.email, user.role); Postgres
+      // return res.json({ token }); Postgres
+      res.cookie("refreshToken", tokens.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+      return res.json({ ...tokens, user: userDto });
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
     }
-    let comparePassword = bcrypt.compareSync(password, user.password);
-    if (!comparePassword) {
-      return next(ApiError.internal("Password is incorrect"));
-    }
-    const token = generateJWT(user.id, user.email, user.role);
-    return res.json({ token });
   }
+
+  async logout(req, res, next) {
+    try {
+      const { refreshToken } = req.cookies;
+      const token = removeToken(refreshToken);
+      res.clearCookie("refreshToken");
+
+      return res.json(token);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
+
+  async refresh(req, res, next) {
+    try {
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
+
   async check(req, res, next) {
     try {
       console.log(req.user);
