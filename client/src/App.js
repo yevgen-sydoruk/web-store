@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { StrictMode, useContext, useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import NavBar from "./components/NavBar";
@@ -25,10 +25,12 @@ const App = observer(() => {
   }
 
   return (
-    <BrowserRouter>
-      <NavBar />
-      <AppRouter />
-    </BrowserRouter>
+    <StrictMode>
+      <BrowserRouter>
+        <NavBar />
+        <AppRouter />
+      </BrowserRouter>
+    </StrictMode>
   );
 });
 

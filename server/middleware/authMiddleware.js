@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 module.exports = function (req, res, next) {
+  console.log(req.method);
   if (req.method === "OPTIONS") {
     next();
   }
@@ -13,6 +14,7 @@ module.exports = function (req, res, next) {
     req.user = decoded;
     next();
   } catch (e) {
+    console.log(req.method, "here");
     res.status(401).json({ message: "Not authorized" });
   }
 };

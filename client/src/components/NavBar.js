@@ -14,8 +14,10 @@ const NavBar = observer(() => {
   const navigate = useNavigate();
 
   const logOut = () => {
+    console.log(user.isAuth);
     user.setUser({});
     user.setIsAuth(false);
+    console.log(user.isAuth);
   };
 
   return (

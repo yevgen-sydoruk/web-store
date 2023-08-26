@@ -1,3 +1,5 @@
+// This file was created for Postgres DB
+
 const sequelize = require("../db");
 const { DataTypes } = require("sequelize");
 
