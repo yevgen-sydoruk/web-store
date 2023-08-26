@@ -35,6 +35,28 @@ const removeToken = async (refreshToken) => {
   return tokenData;
 };
 
+const findToken = async (refreshToken) => {
+  const tokenData = await tokenModel.findOne({ refreshToken });
+  return tokenData;
+};
+
+const validateAccessToken = async (token) => {
+  try {
+    const userData = jwt.verify(token, process.env.SECRET_ACCESS_KEY);
+    return userData;
+  } catch (e) {
+    return null;
+  }
+};
+const validateRefreshToken = async (token) => {
+  try {
+    const userData = jwt.verify(token, process.env.SECRET_REFRESH_KEY);
+    return userData;
+  } catch (e) {
+    return null;
+  }
+};
+
 class UserController {
   async registration(req, res, next) {
     try {
@@ -110,6 +132,26 @@ class UserController {
 
   async refresh(req, res, next) {
     try {
+      const { refreshToken } = req.cookies;
+      if (!refreshToken) {
+        next(ApiError.unauthorizedError(e.message));
+      }
+      const userData = validateRefreshToken(refreshToken);
+      const tokenFromDb = await findToken(refreshToken);
+      if (!userData || !tokenFromDb) {
+        next(ApiError.unauthorizedError(e.message));
+      }
+      const user = await UserModel.findById(userData.id);
+      const userDto = new UserDto(user); //id, email, role
+      const tokens = generateJWT({ ...userDto });
+      await saveToken(userDto.id, tokens.refreshToken);
+      // const token = generateJWT(user.id, user.email, user.role); Postgres
+      // return res.json({ token }); Postgres
+      res.cookie("refreshToken", tokens.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+      return res.json({ ...tokens, user: userDto });
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

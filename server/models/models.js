@@ -1,7 +1,7 @@
 // This file was created for Postgres DB
 
-// const sequelize = require("../db");
-// const { DataTypes } = require("sequelize");
+// !const sequelize = require("../db");
+// !const { DataTypes } = require("sequelize");
 
 // const User = sequelize.define("user", {
 //   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -9,10 +9,10 @@
 //   password: { type: DataTypes.STRING },
 //   role: { type: DataTypes.STRING, defaultValue: "USER" },
 // });
-// const Basket = sequelize.define("basket", {
+// !const Basket = sequelize.define("basket", {
 //   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 // });
-// const BasketDevice = sequelize.define("basket-device", {
+// !const BasketDevice = sequelize.define("basket-device", {
 //   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 // });
 // const Device = sequelize.define("device", {
@@ -40,36 +40,36 @@
 //   description: { type: DataTypes.STRING, allowNull: false },
 // });
 
-// const TypeBrand = sequelize.define("type_brand", {
+// !const TypeBrand = sequelize.define("type_brand", {
 //   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 // });
 
-// User.hasOne(Basket);
-// Basket.belongsTo(User);
+// !User.hasOne(Basket);
+// !Basket.belongsTo(User);
 
-// User.hasMany(Rating);
-// Rating.belongsTo(User);
+// !User.hasMany(Rating);
+// !Rating.belongsTo(User);
 
-// Basket.hasMany(BasketDevice);
-// BasketDevice.belongsTo(Basket);
+// !Basket.hasMany(BasketDevice);
+// !BasketDevice.belongsTo(Basket);
 
-// Type.hasMany(Device);
-// Device.belongsTo(Type);
+// !Type.hasMany(Device);
+// !Device.belongsTo(Type);
 
-// Brand.hasMany(Device);
-// Device.belongsTo(Brand);
+// !Brand.hasMany(Device);
+// !Device.belongsTo(Brand);
 
-// Device.hasMany(Rating);
-// Rating.belongsTo(Device);
+// !Device.hasMany(Rating);
+// !Rating.belongsTo(Device);
 
-// Device.hasMany(BasketDevice);
-// BasketDevice.belongsTo(Device);
+// !Device.hasMany(BasketDevice);
+// !BasketDevice.belongsTo(Device);
 
-// Device.hasMany(DeviceInfo, { as: "info" });
-// DeviceInfo.belongsTo(Device);
+// !Device.hasMany(DeviceInfo, { as: "info" });
+// !DeviceInfo.belongsTo(Device);
 
-// Type.belongsToMany(Brand, { through: TypeBrand });
-// Brand.belongsToMany(Type, { through: TypeBrand });
+// !Type.belongsToMany(Brand, { through: TypeBrand });
+// !Brand.belongsToMany(Type, { through: TypeBrand });
 
 // module.exports = {
 //   User,
