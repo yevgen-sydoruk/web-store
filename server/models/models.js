@@ -53,11 +53,11 @@
 // !Basket.hasMany(BasketDevice);
 // !BasketDevice.belongsTo(Basket);
 
-// !Type.hasMany(Device);
-// !Device.belongsTo(Type);
+// Type.hasMany(Device);
+// Device.belongsTo(Type);
 
-// !Brand.hasMany(Device);
-// !Device.belongsTo(Brand);
+// Brand.hasMany(Device);
+// Device.belongsTo(Brand);
 
 // !Device.hasMany(Rating);
 // !Rating.belongsTo(Device);

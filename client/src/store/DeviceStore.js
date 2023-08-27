@@ -20,6 +20,7 @@ export default class DeviceStore {
     this._brands = brands;
   }
   setDevices(devices) {
+    console.log("setDevices", devices);
     this._devices = devices;
   }
 

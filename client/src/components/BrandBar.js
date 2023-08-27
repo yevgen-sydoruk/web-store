@@ -5,7 +5,6 @@ import { Context } from "../index";
 
 const BrandBar = observer(() => {
   const { device } = useContext(Context);
-  // console.log(device.brands);
   return (
     <Col
       className="d-flex mb-3
@@ -13,13 +12,13 @@ const BrandBar = observer(() => {
     >
       {device.brands.map((brand) => (
         <Card
-          key={brand.id}
+          key={brand._id}
           style={{ cursor: "pointer" }}
           className="p-3 mr-2"
           onClick={() => device.setSelectedBrand(brand)}
-          border={brand.id === device.selectedBrand.id ? "danger" : "light"}
+          border={brand._id === device.selectedBrand._id ? "danger" : "light"}
         >
-          {brand.name + " " + brand.id}
+          {brand.name + " " + brand._id}
         </Card>
       ))}
     </Col>

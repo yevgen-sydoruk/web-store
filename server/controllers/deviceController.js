@@ -46,19 +46,15 @@ class DeviceController {
     if (!brandId && !typeId) {
       devices = await DeviceModel.find();
       // devices = await DeviceModel.find({ limit, offset });
-      console.log("device model without row 1", devices);
     }
     if (brandId && !typeId) {
       devices = await DeviceModel.find({ brandId, limit, offset });
-      console.log("device model without row 2", devices);
     }
     if (!brandId && typeId) {
       devices = await DeviceModel.find({ typeId, limit, offset });
-      console.log("device model without row 3", devices);
     }
     if (brandId && typeId) {
       devices = await DeviceModel.find({ typeId, brandId, limit, offset });
-      console.log("device model without row 4", devices);
     }
     return res.json(devices);
   }

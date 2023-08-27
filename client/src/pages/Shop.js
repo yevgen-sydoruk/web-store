@@ -13,19 +13,19 @@ const Shop = observer(() => {
 
   useEffect(() => {
     fetchTypes().then((data) => device.setTypes(data));
-    fetchBrands().then((data) => device.setBrands(data));
+    fetchBrands().then((data) => {
+      device.setBrands(data);
+    });
     fetchDevices(null, null, 1, 9).then((data) => {
-      // console.log(data);
-      device.setDevices(data.rows);
-      device.setTotalCount(data.count);
+      device.setDevices(data);
+      device.setTotalCount(data.length);
     });
   }, []);
 
   useEffect(() => {
     fetchDevices(device.selectedType.id, device.selectedBrand.id, device.page, 1).then((data) => {
-      // console.log(data);
-      device.setDevices(data.rows);
-      device.setTotalCount(data.count);
+      device.setDevices(data);
+      device.setTotalCount(data.length);
     });
   }, [device.page, device.selectedBrand, device.selectedType]);
 
