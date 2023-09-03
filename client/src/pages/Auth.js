@@ -15,20 +15,20 @@ const Auth = observer(() => {
   const [password, setPasssword] = useState("");
 
   const clickHandler = async () => {
-    try {
-      let data;
-      if (isLogin) {
-        data = await login(email, password);
-      } else {
-        data = await registration(email, password);
-      }
-      console.log(data);
-      user.setUser(user);
-      user.setIsAuth(true);
-      navigate(SHOP_ROUTE);
-    } catch (e) {
-      alert(e.response.data.message);
+    // try {
+    let data;
+    if (isLogin) {
+      data = await login(email, password);
+    } else {
+      data = await registration(email, password);
     }
+    // console.log(data);
+    user.setUser(user);
+    user.setIsAuth(true);
+    navigate(SHOP_ROUTE);
+    // } catch (e) {
+    //   alert(e.response.data.message);
+    // }
   };
   return (
     <Container

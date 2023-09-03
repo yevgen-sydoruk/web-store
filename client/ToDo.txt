@@ -11,3 +11,7 @@
     -
     -
     -
+- Correct responses as messages in UI on auth (if user already auth, reg, login, etc)
+    - Login with not existed acc
+    - Entering wrong pass or email
+    - 
