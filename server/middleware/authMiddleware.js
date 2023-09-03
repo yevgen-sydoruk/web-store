@@ -11,8 +11,6 @@ const validateAccessToken = async (token) => {
 };
 
 module.exports = function (req, res, next) {
-  console.log(req.method);
-
   try {
     const tokenAuthorizationHeader = req.headers.authorization;
     if (!tokenAuthorizationHeader) {

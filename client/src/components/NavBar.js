@@ -8,16 +8,16 @@ import { Button } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../http/userAPI";
 
 const NavBar = observer(() => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
 
-  const logOut = () => {
-    console.log(user.isAuth);
+  const logOut = async () => {
+    await logout();
     user.setUser({});
     user.setIsAuth(false);
-    console.log(user.isAuth);
   };
 
   return (

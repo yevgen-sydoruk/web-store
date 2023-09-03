@@ -46,15 +46,23 @@ class DeviceController {
     if (!brandId && !typeId) {
       devices = await DeviceModel.find();
       // devices = await DeviceModel.find({ limit, offset });
+      // console.log(devices, "all");
+      // devices = await DeviceModel.find({ limit, offset });
     }
     if (brandId && !typeId) {
-      devices = await DeviceModel.find({ brandId, limit, offset });
+      devices = await DeviceModel.find({ brandId });
+      // devices = await DeviceModel.find({ brandId, limit, offset });
+      // console.log(devices, "brand");
     }
     if (!brandId && typeId) {
-      devices = await DeviceModel.find({ typeId, limit, offset });
+      devices = await DeviceModel.find({ typeId });
+      // devices = await DeviceModel.find({ typeId, limit, offset });
+      // console.log(devices, "type");
     }
     if (brandId && typeId) {
-      devices = await DeviceModel.find({ typeId, brandId, limit, offset });
+      // devices = await DeviceModel.find({ typeId, brandId, limit, offset });
+      devices = await DeviceModel.find({ typeId, brandId });
+      // console.log(devices, "brand type all");
     }
     return res.json(devices);
   }
@@ -64,8 +72,8 @@ class DeviceController {
       return next(ApiError.badRequest("Id is missing"));
     }
     const device = await DeviceModel.findOne({
-      where: { id },
-      include: [{ model: DeviceInfoModel, as: "info" }],
+      _id: id,
+      // include: [{ model: DeviceInfoModel, as: "info" }],
     });
     return res.json(device);
   }

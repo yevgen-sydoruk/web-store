@@ -17,9 +17,9 @@ const Auth = observer(() => {
   const clickHandler = async () => {
     try {
       let data;
-      console.log(isLogin);
       if (isLogin) {
         data = await login(email, password);
+        console.log(data);
       } else {
         data = await registration(email, password);
       }

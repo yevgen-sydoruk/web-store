@@ -11,18 +11,18 @@ const App = observer(() => {
   const { user } = useContext(Context);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    check()
-      .then((data) => {
-        user.setUser(true);
-        user.setIsAuth(true);
-      })
-      .finally(() => setLoading(false));
-  }, [user]);
+  // useEffect(() => {
+  //   check()
+  //     .then((data) => {
+  //       user.setUser(true);
+  //       user.setIsAuth(true);
+  //     })
+  //     .finally(() => setLoading(false));
+  // }, [user]);
 
-  if (loading) {
-    return <Spinner animation={"grow"} />;
-  }
+  // if (loading) {
+  //   return <Spinner animation={"grow"} />;
+  // }
 
   return (
     <StrictMode>

@@ -47,14 +47,14 @@ const DevicePage = () => {
       </Row>
       <Row className="d-flex flex-column m-5">
         <h1>Details</h1>
-        {device.info.map((info, index) => (
+        {/* {device.info.map((info, index) => (
           <Row
             key={info.id}
             style={{ background: index % 2 === 0 ? "lightgray" : "transparent", padding: 10 }}
           >
             {info.title}: {info}
           </Row>
-        ))}
+        ))} */}
       </Row>
     </Container>
   );

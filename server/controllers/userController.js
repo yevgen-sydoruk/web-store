@@ -11,7 +11,7 @@ const { validationResult } = require("express-validator");
 
 const generateJWT = (id, email, role) => {
   const accessToken = jwt.sign({ id, email, role }, process.env.SECRET_ACCESS_KEY, {
-    expiresIn: "2h",
+    expiresIn: "1h",
   });
   const refreshToken = jwt.sign({ id, email, role }, process.env.SECRET_REFRESH_KEY, {
     expiresIn: "30d",
@@ -40,14 +40,14 @@ const findToken = async (refreshToken) => {
   return tokenData;
 };
 
-const validateAccessToken = async (token) => {
-  try {
-    const userData = jwt.verify(token, process.env.SECRET_ACCESS_KEY);
-    return userData;
-  } catch (e) {
-    return null;
-  }
-};
+// const validateAccessToken = async (token) => {
+//   try {
+//     const userData = jwt.verify(token, process.env.SECRET_ACCESS_KEY);
+//     return userData;
+//   } catch (e) {
+//     return null;
+//   }
+// };
 const validateRefreshToken = async (token) => {
   try {
     const userData = jwt.verify(token, process.env.SECRET_REFRESH_KEY);
