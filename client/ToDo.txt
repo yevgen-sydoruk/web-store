@@ -1,6 +1,13 @@
-1. Fix devices list when item does not appear with selected device
-2. Login/auth/registration need some feedback
-3. Finish basket
-4. Finish rating
-5. token refresh after leaving the page
-6. Greet the name of the admin near admin buttons
+- Fix devices list when item does not appear with selected device - DONE
+- Login/auth/registration need some feedback
+- Finish basket
+- Finish rating
+- token refresh after leaving the page
+- Greet the name of the admin near admin buttons
+- Downloaded imges must be optimized
+- List must be switched to Filters with checkmarks
+- Overall look of the website:
+    -
+    -
+    -
+    -

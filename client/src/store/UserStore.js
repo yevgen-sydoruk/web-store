@@ -8,6 +8,7 @@ export default class UserStore {
   }
 
   setIsAuth(bool) {
+    console.log("Set is Auth:", bool);
     this._isAuth = bool;
   }
   setUser(user) {

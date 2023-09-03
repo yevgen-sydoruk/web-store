@@ -133,6 +133,7 @@ class UserController {
   async refresh(req, res, next) {
     try {
       const { refreshToken } = req.cookies;
+      console.log(refreshToken);
       if (!refreshToken) {
         next(ApiError.unauthorizedError(e.message));
       }
