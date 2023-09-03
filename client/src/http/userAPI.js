@@ -16,7 +16,7 @@ export const login = async (email, password) => {
 };
 
 export const logout = async () => {
-  const { data } = await $authHost.post("api/user/logout");
+  await $authHost.post("api/user/logout");
   localStorage.removeItem("token");
 };
 

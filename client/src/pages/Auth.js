@@ -15,26 +15,30 @@ const Auth = observer(() => {
   const [password, setPasssword] = useState("");
 
   const clickHandler = async () => {
-    // try {
-    let data;
-    if (isLogin) {
-      data = await login(email, password);
-    } else {
-      data = await registration(email, password);
+    try {
+      let data;
+      if (isLogin) {
+        data = await login(email, password);
+      } else {
+        data = await registration(email, password);
+      }
+      console.log(data); //data about user
+      user.setUser(user);
+      user.setIsAuth(true);
+      navigate(SHOP_ROUTE);
+    } catch (e) {
+      alert(e.response.data.message);
     }
-    // console.log(data);
-    user.setUser(user);
-    user.setIsAuth(true);
-    navigate(SHOP_ROUTE);
-    // } catch (e) {
-    //   alert(e.response.data.message);
-    // }
   };
   return (
     <Container
       className="d-flex justify-content-center align-items-center"
       style={{ height: window.innerHeight - 54 }}
     >
+      <Card className="p-5 m-5">
+        <p>admin1@test.com</p>
+        <p>1234567890</p>
+      </Card>
       <Card style={{ width: 600 }} className="p-5">
         <h2 className="m-auto">{isLogin ? "Authorization" : "Registration"}</h2>
         <Form className="d-flex flex-column">
@@ -52,6 +56,7 @@ const Auth = observer(() => {
             type="password"
           />
         </Form>
+
         <div className="d-flex justify-content-between mt-3 pl-3 pr-3">
           {isLogin ? (
             <div>

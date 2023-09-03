@@ -53,7 +53,7 @@ const CreateDevice = observer(({ show, onHide }) => {
             <Dropdown.Toggle>{device.selectedType.name || "Choose Type"}</Dropdown.Toggle>
             <Dropdown.Menu>
               {device.types.map((type) => (
-                <Dropdown.Item onClick={() => device.setSelectedType(type)} key={type.id}>
+                <Dropdown.Item onClick={() => device.setSelectedType(type)} key={type._id}>
                   {type.name}
                 </Dropdown.Item>
               ))}
@@ -63,7 +63,7 @@ const CreateDevice = observer(({ show, onHide }) => {
             <Dropdown.Toggle>{device.selectedBrand.name || "Choose Brand"}</Dropdown.Toggle>
             <Dropdown.Menu>
               {device.brands.map((brand) => (
-                <Dropdown.Item onClick={() => device.setSelectedBrand(brand)} key={brand.id}>
+                <Dropdown.Item onClick={() => device.setSelectedBrand(brand)} key={brand._id}>
                   {brand.name}
                 </Dropdown.Item>
               ))}

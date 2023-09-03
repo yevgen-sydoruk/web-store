@@ -1,4 +1,5 @@
 - Fix devices list when item does not appear with selected device - DONE
+-Fix issue with Admin page -> list without keys
 - Login/auth/registration need some feedback
 - Finish basket
 - Finish rating
@@ -12,6 +13,10 @@
     -
     -
 - Correct responses as messages in UI on auth (if user already auth, reg, login, etc)
-    - Login with not existed acc
+    - Login with not existed account
     - Entering wrong pass or email
     - 
+- Add more devices
+- Add more types
+- Add more brands
+- Connect to DB
