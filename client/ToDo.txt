@@ -1,9 +1,9 @@
 - Fix devices list when item does not appear with selected device - DONE
--Fix issue with Admin page -> list without keys
+- Fix issue with Admin page -> list without keys - DONE
 - Login/auth/registration need some feedback
 - Finish basket
 - Finish rating
-- token refresh after leaving the page
+- token refresh after leaving the page - DONE
 - Greet the name of the admin near admin buttons
 - Downloaded imges must be optimized
 - List must be switched to Filters with checkmarks
@@ -15,8 +15,11 @@
 - Correct responses as messages in UI on auth (if user already auth, reg, login, etc)
     - Login with not existed account
     - Entering wrong pass or email
-    - 
+    - After adding types, brands, devices
 - Add more devices
 - Add more types
 - Add more brands
 - Connect to DB
+- Add All button to show all brands or all types
+- Add connections in DB
+- Fix Pagination

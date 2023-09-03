@@ -36,10 +36,11 @@ const CreateDevice = observer(({ show, onHide }) => {
     formData.append("name", name);
     formData.append("price", `${price}`);
     formData.append("img", file);
-    formData.append("brandId", device.selectedBrand.id);
-    formData.append("typeId", device.selectedType.id);
-    formData.append("info", JSON.stringify(info));
+    formData.append("brandId", device.selectedBrand._id);
+    formData.append("typeId", device.selectedType._id);
+    // formData.append("info", JSON.stringify(info));
     createDevice(formData).then((data) => onHide());
+    console.log(name, price, device.selectedBrand.id, device.selectedType.id);
   };
 
   return (
@@ -69,22 +70,30 @@ const CreateDevice = observer(({ show, onHide }) => {
               ))}
             </Dropdown.Menu>
           </Dropdown>
-          <Form.Control
-            className="mt-3"
-            placeholder="Enter device`s name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Form.Control
-            className="mt-3"
-            placeholder="Enter device`s price"
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-          />
-          <Form.Control className="mt-3" type="file" onChange={selectFile} />
+
+          <Form.Group controlId="name" className="mb-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              placeholder="Enter device`s name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group controlId="price" className="mb-3">
+            <Form.Label>Price</Form.Label>
+            <Form.Control
+              placeholder="Enter device`s price"
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(Number(e.target.value))}
+            />
+          </Form.Group>
+          <Form.Group controlId="file" className="mb-3">
+            <Form.Label>Image for device</Form.Label>
+            <Form.Control type="file" onChange={selectFile} />
+          </Form.Group>
           <hr />
-          <Button className="" variant="outline-dark" onClick={addInfo}>
+          {/* <Button className="" variant="outline-dark" onClick={addInfo}>
             Add new feature
           </Button>
           {info.map((i) => (
@@ -109,7 +118,7 @@ const CreateDevice = observer(({ show, onHide }) => {
                 </Button>
               </Col>
             </Row>
-          ))}
+          ))} */}
         </Form>
       </Modal.Body>
       <Modal.Footer>
