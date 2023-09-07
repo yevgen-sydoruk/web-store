@@ -38,9 +38,9 @@ const CreateDevice = observer(({ show, onHide }) => {
     formData.append("img", file);
     formData.append("brandId", device.selectedBrand._id);
     formData.append("typeId", device.selectedType._id);
-    // formData.append("info", JSON.stringify(info));
+    formData.append("info", JSON.stringify(info));
     createDevice(formData).then((data) => onHide());
-    console.log(name, price, device.selectedBrand.id, device.selectedType.id);
+    console.log(name, price, device.selectedBrand._id, device.selectedType._id, info);
   };
 
   return (
@@ -93,7 +93,7 @@ const CreateDevice = observer(({ show, onHide }) => {
             <Form.Control type="file" onChange={selectFile} />
           </Form.Group>
           <hr />
-          {/* <Button className="" variant="outline-dark" onClick={addInfo}>
+          <Button className="" variant="outline-dark" onClick={addInfo}>
             Add new feature
           </Button>
           {info.map((i) => (
@@ -118,7 +118,7 @@ const CreateDevice = observer(({ show, onHide }) => {
                 </Button>
               </Col>
             </Row>
-          ))} */}
+          ))}
         </Form>
       </Modal.Body>
       <Modal.Footer>

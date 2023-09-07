@@ -9,6 +9,7 @@ const DevicePage = () => {
   useEffect(() => {
     fetchOneDevice(id).then((data) => setDevice(data));
   }, [id]);
+  console.log(device.info);
   return (
     <Container className="mt-3">
       <Row>
@@ -47,14 +48,14 @@ const DevicePage = () => {
       </Row>
       <Row className="d-flex flex-column m-5">
         <h1>Details</h1>
-        {/* {device.info.map((info, index) => (
+        {device.info.map((info, index) => (
           <Row
-            key={info.id}
+            key={info._id}
             style={{ background: index % 2 === 0 ? "lightgray" : "transparent", padding: 10 }}
           >
-            {info.title}: {info}
+            {info.title}: {info.description}
           </Row>
-        ))} */}
+        ))}
       </Row>
     </Container>
   );

@@ -23,3 +23,5 @@
 - Add All button to show all brands or all types
 - Add connections in DB
 - Fix Pagination
+- Check all hyperlinks
+    - Home page from BestPurcahse 

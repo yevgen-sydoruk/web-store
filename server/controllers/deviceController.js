@@ -1,6 +1,6 @@
 // const { Device, DeviceInfo } = require("../models/models");
 const DeviceModel = require("../models/device-model");
-const DeviceInfoModel = require("../models/device-model");
+// const DeviceInfoModel = require("../models/deviceInfo-model");
 const ApiError = require("../error/apiError");
 const uuid = require("uuid");
 const path = require("path");
@@ -9,6 +9,22 @@ class DeviceController {
   async create(req, res, next) {
     try {
       let { name, price, rating, brandId, typeId, info } = req.body;
+      console.log(info);
+      info = JSON.parse(info);
+      // if (info) {
+      //   console.log(device.id);
+      //   info = JSON.parse(info);
+      //   info.forEach((i) =>
+      //     DeviceInfoModel.create({
+      //       title: i.title,
+      //       description: i.description,
+      //       deviceId: device.id,
+      //     })
+      //   );
+      // } else {
+      //   info = [];
+      // }
+
       const { img } = req.files;
       let fileName = uuid.v4() + ".jpg";
       img.mv(path.resolve(__dirname, "..", "static", fileName));
@@ -19,18 +35,8 @@ class DeviceController {
         brandId,
         typeId,
         img: fileName,
+        info,
       });
-
-      if (info) {
-        info = JSON.parse(info);
-        info.forEach((i) =>
-          DeviceInfoModel.create({
-            title: i.title,
-            description: i.description,
-            deviceId: device.id,
-          })
-        );
-      }
 
       return res.json(device);
     } catch (e) {
@@ -73,8 +79,8 @@ class DeviceController {
     }
     const device = await DeviceModel.findOne({
       _id: id,
-      // include: [{ model: DeviceInfoModel, as: "info" }],
-    });
+      // include: [{ model: DeviceInfoModel }],
+    }).populate("info");
     return res.json(device);
   }
 }
