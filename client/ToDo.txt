@@ -1,11 +1,13 @@
 - Fix devices list when item does not appear with selected device - DONE
 - Fix issue with Admin page -> list without keys - DONE
+- token refresh after leaving the page - DONE
+
 - Login/auth/registration need some feedback
 - Finish basket
 - Finish rating
-- token refresh after leaving the page - DONE
 - Greet the name of the admin near admin buttons
 - Downloaded imges must be optimized
+- Cleaning of deleted images
 - List must be switched to Filters with checkmarks
 - Overall look of the website:
     -
@@ -22,6 +24,8 @@
 - Connect to DB
 - Add All button to show all brands or all types
 - Add connections in DB
+    - Rating
+    - Basket
 - Fix Pagination
 - Check all hyperlinks
     - Home page from BestPurcahse 

@@ -45,30 +45,30 @@ class DeviceController {
   }
   async getAll(req, res) {
     let { brandId, typeId, limit, page } = req.query;
+    console.log(limit, page);
     page = page || 1;
     limit = limit || 9;
     let offset = page * limit - limit;
     let devices;
     if (!brandId && !typeId) {
-      devices = await DeviceModel.find();
-      // devices = await DeviceModel.find({ limit, offset });
-      // console.log(devices, "all");
-      // devices = await DeviceModel.find({ limit, offset });
+      devices = await DeviceModel.paginate({}, { page, limit }).then((result) => {
+        return result;
+      });
     }
     if (brandId && !typeId) {
-      devices = await DeviceModel.find({ brandId });
-      // devices = await DeviceModel.find({ brandId, limit, offset });
-      // console.log(devices, "brand");
+      devices = await DeviceModel.paginate({ brandId }, { page, limit }).then((result) => {
+        return result;
+      });
     }
     if (!brandId && typeId) {
-      devices = await DeviceModel.find({ typeId });
-      // devices = await DeviceModel.find({ typeId, limit, offset });
-      // console.log(devices, "type");
+      devices = await DeviceModel.paginate({ typeId }, { page, limit }).then((result) => {
+        return result;
+      });
     }
     if (brandId && typeId) {
-      // devices = await DeviceModel.find({ typeId, brandId, limit, offset });
-      devices = await DeviceModel.find({ typeId, brandId });
-      // console.log(devices, "brand type all");
+      devices = await DeviceModel.paginate({ typeId, brandId }, { page, limit }).then((result) => {
+        return result;
+      });
     }
     return res.json(devices);
   }

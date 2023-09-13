@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+var mongoosePaginate = require("mongoose-paginate");
 
 const DeviceSchema = new Schema({
   //   id: { type: Number, unique: true, required: true },
@@ -16,5 +17,6 @@ const DeviceSchema = new Schema({
     },
   ],
 });
+DeviceSchema.plugin(mongoosePaginate);
 
 module.exports = model("Device", DeviceSchema, "devices");

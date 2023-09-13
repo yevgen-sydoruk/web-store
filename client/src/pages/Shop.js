@@ -16,17 +16,19 @@ const Shop = observer(() => {
     fetchBrands().then((data) => {
       device.setBrands(data);
     });
-    fetchDevices(null, null, 1, 9).then((data) => {
-      device.setDevices(data);
-      device.setTotalCount(data.length);
+    fetchDevices(null, null, 1, 5).then((data) => {
+      device.setDevices(data.docs);
+      device.setTotalCount(data.total);
     });
   }, []);
 
   useEffect(() => {
-    fetchDevices(device.selectedType._id, device.selectedBrand._id, device.page, 1).then((data) => {
-      device.setDevices(data);
-      device.setTotalCount(data.length);
-    });
+    fetchDevices(device.selectedType._id, device.selectedBrand._id, device.page, device.limit).then(
+      (data) => {
+        device.setDevices(data.docs);
+        device.setTotalCount(data.total);
+      }
+    );
   }, [device.page, device.selectedBrand, device.selectedType]);
   return (
     <Container className="">
@@ -36,6 +38,7 @@ const Shop = observer(() => {
         </Col>
         <Col md={9}>
           <BrandBar />
+
           {device.devices.length === 0 ? "No results" : <DeviceList />}
           <Pages />
         </Col>
