@@ -26,6 +26,6 @@
 - Add connections in DB
     - Rating
     - Basket
-- Fix Pagination
+- Fix Pagination DONE
 - Check all hyperlinks
     - Home page from BestPurcahse 

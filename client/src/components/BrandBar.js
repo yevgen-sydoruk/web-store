@@ -5,6 +5,7 @@ import { Context } from "../index";
 
 const BrandBar = observer(() => {
   const { device } = useContext(Context);
+
   return (
     <Col
       className="d-flex mb-3

@@ -6,21 +6,24 @@ import { DEVICE_ROUTE } from "../utils/consts";
 
 const DeviceItem = ({ device }) => {
   const navigate = useNavigate();
-
   return (
     <Col
       md={3}
       className="mb-3 d-flex justify-content-center  "
       onClick={() => navigate(DEVICE_ROUTE + "/" + device._id)}
     >
-      <Card style={{ width: 150, cursor: "pointer" }} border={"light"}>
-        <Image width={150} height={150} src={process.env.REACT_APP_API_URL + device.img} />
-        <div className="d-flex justify-content-between align-items-center text-black-50">
-          <div>{device.name}</div>
-          <div className="d-flex align-items-center">
-            <div>{device.rating}</div>
-            <Image width={20} height={20} src={star} />
-          </div>
+      <Card style={{ width: 250, cursor: "pointer" }} border={"dark"} className="p-2">
+        <Image
+          className="align-self-center mb-3"
+          width={150}
+          height={150}
+          src={process.env.REACT_APP_API_URL + device.img}
+        />
+
+        <h2 style={{ fontSize: "1.0625rem" }}>{device.name}</h2>
+        <div className="d-flex align-items-center text-black-50">
+          <div>{device.rating}</div>
+          <Image width={20} height={20} src={star} />
         </div>
         <div>{device.name}</div>
       </Card>

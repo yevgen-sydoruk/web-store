@@ -74,6 +74,7 @@ class DeviceController {
   }
   async getOne(req, res, next) {
     const { id } = req.params;
+
     if (!id) {
       return next(ApiError.badRequest("Id is missing"));
     }

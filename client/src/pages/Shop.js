@@ -16,7 +16,7 @@ const Shop = observer(() => {
     fetchBrands().then((data) => {
       device.setBrands(data);
     });
-    fetchDevices(null, null, 1, 5).then((data) => {
+    fetchDevices(null, null, 1, 8).then((data) => {
       device.setDevices(data.docs);
       device.setTotalCount(data.total);
     });

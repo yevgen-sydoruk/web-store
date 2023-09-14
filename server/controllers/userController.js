@@ -51,6 +51,7 @@ const findToken = async (refreshToken) => {
 const validateRefreshToken = async (token) => {
   try {
     const userData = jwt.verify(token, process.env.SECRET_REFRESH_KEY);
+    console.log("JWT verify: ", userData);
     return userData;
   } catch (e) {
     return null;
@@ -160,7 +161,7 @@ class UserController {
 
   async check(req, res, next) {
     try {
-      console.log(req.user);
+      console.log("req.user", req.user);
       const token = generateJWT(req.user.id, req.user.email, req.user.role);
       return res.json({ token });
     } catch (e) {
