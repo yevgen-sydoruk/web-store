@@ -14,5 +14,30 @@ class BrandController {
       next(ApiError.badRequest(e.message));
     }
   }
+
+  async getOne(req, res, next) {
+    const { id } = req.params;
+
+    if (!id) {
+      return next(ApiError.badRequest("Id is missing"));
+    }
+    const device = await BrandModel.findOne({
+      _id: id,
+      // include: [{ model: DeviceInfoModel }],
+    });
+    return res.json(device);
+  }
+
+  async deleteOne(req, res, next) {
+    const { id } = req.params;
+    if (!id) {
+      return next(ApiError.badRequest("Id is missing"));
+    }
+    const device = await BrandModel.deleteOne({
+      _id: id,
+      // include: [{ model: DeviceInfoModel }],
+    });
+    return console.log("deleted");
+  }
 }
 module.exports = new BrandController();

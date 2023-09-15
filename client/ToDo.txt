@@ -2,6 +2,8 @@
 - Fix issue with Admin page -> list without keys - DONE
 - token refresh after leaving the page - DONE
 
+
+- figure out the problem in index.js(client) about refresh
 - Login/auth/registration need some feedback
 - Finish basket
 - Finish rating

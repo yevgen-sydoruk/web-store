@@ -43,6 +43,7 @@ class DeviceController {
       next(ApiError.badRequest(e.message));
     }
   }
+
   async getAll(req, res) {
     let { brandId, typeId, limit, page } = req.query;
     console.log(limit, page);
@@ -72,6 +73,7 @@ class DeviceController {
     }
     return res.json(devices);
   }
+
   async getOne(req, res, next) {
     const { id } = req.params;
 
