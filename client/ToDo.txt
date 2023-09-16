@@ -31,3 +31,5 @@
 - Fix Pagination DONE
 - Check all hyperlinks
     - Home page from BestPurcahse 
+
+- Add separation between User and Admin (User could buy products and veiw them, Admin can add types, brands and devices)

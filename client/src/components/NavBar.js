@@ -37,7 +37,7 @@ const NavBar = observer(() => {
               Admin
             </Button>
             <Button variant={"outline-light"} className="ml-2" onClick={() => logOut()}>
-              Leave
+              Log out
             </Button>
           </Nav>
         ) : (

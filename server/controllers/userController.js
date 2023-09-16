@@ -2,6 +2,7 @@ const ApiError = require("../error/apiError");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const tokenModel = require("../models/token-model");
+const userService = require("../services/user-service");
 // const { User, Basket } = require("../models/models"); //postgres
 
 const UserModel = require("../models/user-model");
@@ -9,26 +10,26 @@ const UserDto = require("../dto/user-dto");
 
 const { validationResult } = require("express-validator");
 
-const generateJWT = (id, email, role) => {
-  const accessToken = jwt.sign({ id, email, role }, process.env.SECRET_ACCESS_KEY, {
-    expiresIn: "1h",
-  });
-  const refreshToken = jwt.sign({ id, email, role }, process.env.SECRET_REFRESH_KEY, {
-    expiresIn: "30d",
-  });
+// const generateJWT = (id, email, role) => {
+//   const accessToken = jwt.sign({ id, email, role }, process.env.SECRET_ACCESS_KEY, {
+//     expiresIn: "1h",
+//   });
+//   const refreshToken = jwt.sign({ id, email, role }, process.env.SECRET_REFRESH_KEY, {
+//     expiresIn: "30d",
+//   });
 
-  return { accessToken, refreshToken };
-};
+//   return { accessToken, refreshToken };
+// };
 
-const saveToken = async (id, refreshToken) => {
-  const tokenData = await tokenModel.findOne({ user: id });
-  if (tokenData) {
-    tokenData.refreshToken = refreshToken;
-    return tokenData.save();
-  }
-  const token = await tokenModel.create({ user: id, refreshToken });
-  return token;
-};
+// const saveToken = async (id, refreshToken) => {
+//   const tokenData = await tokenModel.findOne({ user: id });
+//   if (tokenData) {
+//     tokenData.refreshToken = refreshToken;
+//     return tokenData.save();
+//   }
+//   const token = await tokenModel.create({ user: id, refreshToken });
+//   return token;
+// };
 
 const removeToken = async (refreshToken) => {
   const tokenData = await tokenModel.deleteOne({ refreshToken });
@@ -65,31 +66,49 @@ class UserController {
       if (!errors.isEmpty()) {
         return next(ApiError.badRequest("Validation error", errors.array()));
       }
-      const { email, password, role } = req.body;
 
-      if (!email || !password) {
-        return next(ApiError.badRequest("Incorrect email or password"));
-      }
-      const candidate = await UserModel.findOne({ email });
-      if (candidate) {
-        return next(ApiError.badRequest("This email is already registered"));
-      }
-      const hashPassword = await bcrypt.hash(password, 5);
-      const user = await UserModel.create({ email, role, password: hashPassword });
-      // const basket = await Basket.create({ userId: user.id });
-      const userDto = new UserDto(user); //id, email, role
+      const { email, password } = req.body;
+      const userData = await userService.registration(email, password);
 
-      const tokens = generateJWT({ ...userDto });
-
-      await saveToken(userDto.id, tokens.refreshToken);
-      res.cookie("refreshToken", tokens.refreshToken, {
+      res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-      });
-      return res.json({ ...tokens, user: userDto });
+      }); //httpOnly needed so the cookie cannot be changed in browser with js
+
+      return res.json(userData);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
+    // try {
+    //   const errors = validationResult(req);
+    //   if (!errors.isEmpty()) {
+    //     return next(ApiError.badRequest("Validation error", errors.array()));
+    //   }
+    //   const { email, password, role } = req.body;
+
+    //   if (!email || !password) {
+    //     return next(ApiError.badRequest("Incorrect email or password"));
+    //   }
+    //   const candidate = await UserModel.findOne({ email });
+    //   if (candidate) {
+    //     return next(ApiError.badRequest("This email is already registered"));
+    //   }
+    //   const hashPassword = await bcrypt.hash(password, 5);
+    //   const user = await UserModel.create({ email, role, password: hashPassword });
+    //   // const basket = await Basket.create({ userId: user.id });
+    //   const userDto = new UserDto(user); //id, email, role
+
+    //   const tokens = generateJWT({ ...userDto });
+
+    //   await saveToken(userDto.id, tokens.refreshToken);
+    //   res.cookie("refreshToken", tokens.refreshToken, {
+    //     maxAge: 30 * 24 * 60 * 60 * 1000,
+    //     httpOnly: true,
+    //   });
+    //   return res.json({ ...tokens, user: userDto });
+    // } catch (e) {
+    //   next(ApiError.badRequest(e.message));
+    // }
   }
 
   async login(req, res, next) {
@@ -122,6 +141,7 @@ class UserController {
   async logout(req, res, next) {
     try {
       const { refreshToken } = req.cookies;
+      console.log(refreshToken);
       const token = removeToken(refreshToken);
       res.clearCookie("refreshToken");
 
@@ -161,12 +181,13 @@ class UserController {
 
   async check(req, res, next) {
     try {
-      console.log("req.user", req.user);
+      console.log("In userController check method req.user", req.user);
       const token = generateJWT(req.user.id, req.user.email, req.user.role);
       return res.json({ token });
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
   }
+  async activate(req, res, next) {}
 }
 module.exports = new UserController();
