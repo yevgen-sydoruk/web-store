@@ -18,7 +18,10 @@ class UserService {
       activationLink,
       role: "USER",
     }); //save user to the database
-    await mailService.sentActivationMail(email, activationLink); // send the activation link
+    await mailService.sentActivationMail(
+      email,
+      `${process.env.API_URL}/api/activate/${activationLink}`
+    ); // send the activation link
 
     const userDto = new UserDto(user); //id, email, isActivated, role
     const tokens = tokenService.generateTokens(...userDto); //creating tokens for user data transfer object
