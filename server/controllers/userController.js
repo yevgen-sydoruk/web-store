@@ -79,36 +79,47 @@ class UserController {
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
-    // try {
-    //   const errors = validationResult(req);
-    //   if (!errors.isEmpty()) {
-    //     return next(ApiError.badRequest("Validation error", errors.array()));
-    //   }
-    //   const { email, password, role } = req.body;
+  }
+  // try {
+  //   const errors = validationResult(req);
+  //   if (!errors.isEmpty()) {
+  //     return next(ApiError.badRequest("Validation error", errors.array()));
+  //   }
+  //   const { email, password, role } = req.body;
 
-    //   if (!email || !password) {
-    //     return next(ApiError.badRequest("Incorrect email or password"));
-    //   }
-    //   const candidate = await UserModel.findOne({ email });
-    //   if (candidate) {
-    //     return next(ApiError.badRequest("This email is already registered"));
-    //   }
-    //   const hashPassword = await bcrypt.hash(password, 5);
-    //   const user = await UserModel.create({ email, role, password: hashPassword });
-    //   // const basket = await Basket.create({ userId: user.id });
-    //   const userDto = new UserDto(user); //id, email, role
+  //   if (!email || !password) {
+  //     return next(ApiError.badRequest("Incorrect email or password"));
+  //   }
+  //   const candidate = await UserModel.findOne({ email });
+  //   if (candidate) {
+  //     return next(ApiError.badRequest("This email is already registered"));
+  //   }
+  //   const hashPassword = await bcrypt.hash(password, 5);
+  //   const user = await UserModel.create({ email, role, password: hashPassword });
+  //   // const basket = await Basket.create({ userId: user.id });
+  //   const userDto = new UserDto(user); //id, email, role
 
-    //   const tokens = generateJWT({ ...userDto });
+  //   const tokens = generateJWT({ ...userDto });
 
-    //   await saveToken(userDto.id, tokens.refreshToken);
-    //   res.cookie("refreshToken", tokens.refreshToken, {
-    //     maxAge: 30 * 24 * 60 * 60 * 1000,
-    //     httpOnly: true,
-    //   });
-    //   return res.json({ ...tokens, user: userDto });
-    // } catch (e) {
-    //   next(ApiError.badRequest(e.message));
-    // }
+  //   await saveToken(userDto.id, tokens.refreshToken);
+  //   res.cookie("refreshToken", tokens.refreshToken, {
+  //     maxAge: 30 * 24 * 60 * 60 * 1000,
+  //     httpOnly: true,
+  //   });
+  //   return res.json({ ...tokens, user: userDto });
+  // } catch (e) {
+  //   next(ApiError.badRequest(e.message));
+  // }
+
+  async activate(req, res, next) {
+    try {
+      const activationLink = req.params.link;
+      console.log(activationLink);
+      await userService.activate(activationLink);
+      return res.redirect(process.env.CLIENT_URL);
+    } catch (e) {
+      next(e);
+    }
   }
 
   async login(req, res, next) {
@@ -188,6 +199,5 @@ class UserController {
       next(ApiError.badRequest(e.message));
     }
   }
-  async activate(req, res, next) {}
 }
 module.exports = new UserController();

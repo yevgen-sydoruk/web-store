@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const mailService = require("./mail-service");
 const tokenService = require("./token-service");
+const UserDto = require("../dto/user-dto");
 
 class UserService {
   async registration(email, password) {
@@ -18,13 +19,13 @@ class UserService {
       activationLink,
       role: "USER",
     }); //save user to the database
-    await mailService.sentActivationMail(
+    await mailService.sendActivationMail(
       email,
-      `${process.env.API_URL}/api/activate/${activationLink}`
+      `${process.env.API_URL}/api/user/activate/${activationLink}`
     ); // send the activation link
 
     const userDto = new UserDto(user); //id, email, isActivated, role
-    const tokens = tokenService.generateTokens(...userDto); //creating tokens for user data transfer object
+    const tokens = tokenService.generateTokens({ ...userDto }); //creating tokens for user data transfer object
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
     return {
@@ -32,6 +33,15 @@ class UserService {
       user: userDto,
     };
   }
-}
 
+  async activate(activationLink) {
+    const user = await UserModel.findOne({ activationLink });
+    console.log(user);
+    if (!user) {
+      throw new Error("Incorrect activation link");
+    }
+    user.isActivated = true;
+    await user.save();
+  }
+}
 module.exports = new UserService();
