@@ -1,7 +1,7 @@
 - Fix devices list when item does not appear with selected device - DONE
 - Fix issue with Admin page -> list without keys - DONE
 - token refresh after leaving the page - DONE
-
+- Add activation link for new reg user - DONE
 
 - figure out the problem in index.js(client) about refresh
 - Login/auth/registration need some feedback

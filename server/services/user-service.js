@@ -36,7 +36,6 @@ class UserService {
 
   async activate(activationLink) {
     const user = await UserModel.findOne({ activationLink });
-    console.log(user);
     if (!user) {
       throw new Error("Incorrect activation link");
     }
